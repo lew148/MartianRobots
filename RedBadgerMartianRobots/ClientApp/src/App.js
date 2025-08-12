@@ -2,57 +2,8 @@ import React, { useState } from 'react';
 import RobotsForm from './components/RobotsForm';
 import { Container, Col, Button } from 'reactstrap';
 
-const test = {
-    grid: {
-        x: 4,
-        y: 6,
-    },
-    results: [
-        {
-            endPosition: {
-                coords: {
-                    x: 2,
-                    y: 4,
-                },
-                orientation: 'N',
-            },
-            lost: true,
-        },
-        {
-            endPosition: {
-                coords: {
-                    x: 42,
-                    y: 5,
-                },
-                orientation: 'E',
-            },
-            lost: true,
-        },
-        {
-            endPosition: {
-                coords: {
-                    x: 11,
-                    y: 0,
-                },
-                orientation: 'S',
-            },
-            lost: false,
-        },
-        {
-            endPosition: {
-                coords: {
-                    x: 0,
-                    y: -1,
-                },
-                orientation: 'W',
-            },
-            lost: true,
-        },
-    ],
-};
-
 const App = () => {
-    const [result, setResult] = useState(test);
+    const [result, setResult] = useState(undefined);
 
     const getOrientationString = (orientation) => {
         if (orientation === 'N') return 'North';
