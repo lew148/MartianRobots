@@ -23,12 +23,14 @@ const App = () => {
                         <Button onClick={() => setResult(undefined)}>Reset</Button>
                     </div>
                     <span>With a <strong>{`${result.grid.x} x ${result.grid.y}`}</strong> grid</span>
-                    <div className="px-3 mt-4 d-flex justify-content-between align-items-center">
-                        <div className="fw-bold">Coords</div>
+                    <div className="mt-4 d-flex justify-content-between align-items-center">
+                        <div className="fw-bold">Robot #</div>
+                        <div className="fw-bold">Coordinates</div>
                         <div className="fw-bold">Orientation</div>
-                        <div className="fw-bold">Status</div>
+                        <div className="fw-bold">Conclusion</div>
                     </div>
                     {result.results.map((r, i) => <div key={i} className="border rounded py-2 px-4 my-2 bg-light d-flex justify-content-between align-items-center">
+                        <div><strong>{i+1}</strong></div>
                         <div>{"("}{r.endPosition.coords.x}, {r.endPosition.coords.y}{")"}</div>
                         <div>{getOrientationString(r.endPosition.orientation)}</div>
                         <div className={`${r.lost ? "text-danger" : "text-success"} fw-bold`}>{r.lost ? "LOST" : "SAFE"}</div>

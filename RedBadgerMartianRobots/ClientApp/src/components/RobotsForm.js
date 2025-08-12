@@ -101,26 +101,20 @@ const RobotsForm = ({ setResult }) => {
     return <Form onSubmit={onSubmit}>
         <div className="d-flex justify-content-between">
             <h3 className="mb-4">Martian Robots</h3>
-            <Button color="primary" className="h-50">Submit</Button>
+            <Button color="primary" className="h-50">Start</Button>
         </div>
-        <Row className="align-items-center justify-content-between">
-            <Col xs="auto">
-                <Coords
-                    gridAxis
-                    journeyId={0}
-                    xValue={gridX}
-                    onXChange={(e) => setGridX(e.target.value)}
-                    yValue={gridY}
-                    onYChange={(e) => setGridY(e.target.value)}
-                />
-            </Col>
-            <Col xs="auto">
-                <Button color="primary" onClick={onAddClick}>Add Journey</Button>
-            </Col>
-        </Row>
+        <Coords
+            gridAxis
+            journeyId={0}
+            xValue={gridX}
+            onXChange={(e) => setGridX(e.target.value)}
+            yValue={gridY}
+            onYChange={(e) => setGridY(e.target.value)}
+        />
         <Journeys
             journeys={journeys}
-            onDeleteClick={onDeleteClick}
+            onAddJourneyClick={onAddClick}
+            onDeleteJourneyClick={onDeleteClick}
             onAxisChange={onJourneyAxisChange}
             onOrientationChange={onJourneyOrientationChange}
             onInstructionsControlClick={onInstructionsControlClick}

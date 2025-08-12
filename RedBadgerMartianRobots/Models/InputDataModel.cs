@@ -5,6 +5,9 @@ namespace RedBadgerMartianRobots.Models;
 
 public class InputDataModel
 {
+    /**
+     * For reading data from program args
+     */
     private static InputData? GetInputDataFromArgs(List<string> args)
     {
         try

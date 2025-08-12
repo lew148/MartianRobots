@@ -28,22 +28,37 @@ public class JourneyModel
     {
         foreach (var journey in _journeys)
         {
-            if (!PlaceNewRobot(journey.StartPosition.Coords, journey.StartPosition.Orientation)) continue;
-
             var wasLost = false;
+
+            if (!PlaceNewRobot(journey.StartPosition.Coords, journey.StartPosition.Orientation))
+            {
+                // robot was lost on placement
+                yield return new RobotResult
+                {
+                    Lost = true,
+                    EndPosition = new RobotPosition
+                    {
+                        Coords = new Coords { X = journey.StartPosition.Coords.X, Y = journey.StartPosition.Coords.Y },
+                        Orientation = journey.StartPosition.Orientation
+                    }
+                };
+                
+                continue;
+            }
+
             foreach (var instruction in journey.Instructions)
             {
                 if (PerformInstruction(instruction)) continue;
                 wasLost = true;
                 break;
             }
-
+            
             yield return new RobotResult
             {
                 Lost = wasLost,
                 EndPosition = new RobotPosition
                 {
-                    Coords = _currentCoords,
+                    Coords = new Coords { X = _currentCoords.X, Y = _currentCoords.Y },
                     Orientation = _currentOrientation
                 }
             };
