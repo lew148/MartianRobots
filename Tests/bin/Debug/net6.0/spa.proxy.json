@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44492",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Dev\\Interviews\\RedBadgerMartianRobots\\RedBadgerMartianRobots\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}
