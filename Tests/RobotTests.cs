@@ -8,7 +8,7 @@ public class RobotTests : BaseTest
     [Fact]
     public void OutOfBoundsRobotIsLostAndIgnored()
     {
-        var result = GetResults(Grid(TenByTen, new List<RobotData>
+        var result = GetResults(Grid(TenTen, new List<RobotData>
         {
             OutOfBoundsBot,
             SampleBot1
@@ -51,7 +51,7 @@ public class RobotTests : BaseTest
     [Fact]
     public void BotsAccountForLostScents()
     {
-        var results = GetResults(Grid(TenByTen, new List<RobotData>
+        var results = GetResults(Grid(TenTen, new List<RobotData>
         {
             ExtraBot3,
             ExtraBot3
@@ -80,7 +80,7 @@ public class RobotTests : BaseTest
             .ToList();
 
         var timer = Stopwatch.StartNew();
-        GetResults(Grid(TenByTen, bigData));
+        GetResults(Grid(TenTen, bigData));
         timer.Stop();
 
         Assert.True(timer.ElapsedMilliseconds < 10000);

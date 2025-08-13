@@ -24,6 +24,12 @@ public class JourneyModel
         _currentOrientation = Orientation.N;
     }
 
+    public RobotPosition GetCurrentPosition() => new()
+    {
+        Coords = new Coords { X = _currentCoords.X, Y = _currentCoords.Y },
+        Orientation = _currentOrientation
+    };
+
     public IEnumerable<RobotResult> PerformJourneys()
     {
         foreach (var journey in _journeys)
@@ -42,7 +48,7 @@ public class JourneyModel
                         Orientation = journey.StartPosition.Orientation
                     }
                 };
-                
+
                 continue;
             }
 
@@ -52,7 +58,7 @@ public class JourneyModel
                 wasLost = true;
                 break;
             }
-            
+
             yield return new RobotResult
             {
                 Lost = wasLost,
@@ -122,7 +128,7 @@ public class JourneyModel
         }
     }
 
-    private void TurnRobot(Instruction instruction)
+    public void TurnRobot(Instruction instruction)
     {
         if (instruction != Instruction.R && instruction != Instruction.L)
         {
@@ -139,7 +145,10 @@ public class JourneyModel
         };
     }
 
-    private bool PlaceNewRobot(Coords coords, Orientation orientation)
+    public bool PlaceNewRobot(RobotData robotData) =>
+        PlaceNewRobot(robotData.StartPosition.Coords, robotData.StartPosition.Orientation);
+
+    public bool PlaceNewRobot(Coords coords, Orientation orientation)
     {
         if (RobotIsOutOfBounds(coords)) return false;
         _currentCoords = coords;
@@ -150,7 +159,7 @@ public class JourneyModel
     private bool RobotIsOutOfBounds(Coords coords) => coords.X > _gridUpperCoords.X || coords.Y > _gridUpperCoords.Y ||
                                                       coords.X < _gridLowerCoords.X || coords.Y < _gridLowerCoords.Y;
 
-    private bool RobotIsFacingOutOfBounds() =>
+    public bool RobotIsFacingOutOfBounds() =>
         (_currentCoords.X == _gridUpperCoords.X && _currentOrientation == Orientation.E) ||
         (_currentCoords.Y == _gridUpperCoords.Y && _currentOrientation == Orientation.N) ||
         (_currentCoords.X == _gridLowerCoords.X && _currentOrientation == Orientation.W) ||

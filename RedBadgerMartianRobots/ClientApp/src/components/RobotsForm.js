@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Form } from 'reactstrap';
+import { Button, Form } from 'reactstrap';
 import Coords from './Coords';
 import Journeys from './Journeys';
+import { sampleGridX, sampleGridY, sampleJourneys } from '../sampleData';
 
 const defaultJourney = {
     id: 1,
@@ -12,12 +13,21 @@ const defaultJourney = {
 }
 
 const RobotsForm = ({ setResult }) => {
+    const [erroredRequest, setErroredRequest] = useState(false);
+
     const [gridX, setGridX] = useState(undefined);
     const [gridY, setGridY] = useState(undefined);
     const [journeys, setJourneys] = useState([{ ...defaultJourney }]);
 
+    const onUseSampleDataClick = () => {
+        setGridX(sampleGridX);
+        setGridY(sampleGridY)
+        setJourneys(sampleJourneys);
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (erroredRequest) setErroredRequest(false);
         await sendRobotData({
             gridUpperCoords: {
                 x: gridX,
@@ -40,9 +50,7 @@ const RobotsForm = ({ setResult }) => {
         try {
             const response = await fetch('/martianrobot', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
@@ -51,10 +59,10 @@ const RobotsForm = ({ setResult }) => {
             }
 
             const result = await response.json();
-            console.log('Server response:', result);
             setResult(result);
         } catch (error) {
             console.error('Error posting to server:', error);
+            setErroredRequest(true);
         }
     }
 
@@ -101,8 +109,17 @@ const RobotsForm = ({ setResult }) => {
     return <Form onSubmit={onSubmit}>
         <div className="d-flex justify-content-between">
             <h3 className="mb-4">Martian Robots</h3>
-            <Button color="primary" className="h-50">Start</Button>
+            <div className="h-50">
+                <Button color="light" className="me-2" onClick={onUseSampleDataClick}>Load Sample Data</Button>
+                <Button color="primary">Start</Button>
+            </div>
         </div>
+        {
+            erroredRequest && <div className="p-3 border rounded bg-danger text-light d-flex justify-content-between align-items-center">
+                <h6 className="m-0">An unexpected error has occured. Please try again...</h6>
+                <Button className="m-0 p-0 text-light" color="" onClick={() => setErroredRequest(false)}>OK</Button>
+            </div>
+        }
         <Coords
             gridAxis
             journeyId={0}

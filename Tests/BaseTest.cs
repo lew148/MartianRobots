@@ -5,12 +5,13 @@ using RedBadgerMartianRobots.Models;
 
 namespace Tests;
 
-public class BaseTest
+public abstract class BaseTest
 {
     protected static List<RobotResult> GetResults(InputData data) => new JourneyModel(data).PerformJourneys().ToList();
 
-    protected readonly Coords SampleGrid = new() { X = 5, Y = 3 };
-    protected readonly Coords TenByTen = new() { X = 10, Y = 10 };
+    protected static readonly Coords SampleGrid = new() { X = 5, Y = 3 };
+    protected static readonly Coords TenTen = new() { X = 10, Y = 10 };
+    protected static readonly Coords ZeroZero = new() { X = 0, Y = 0 };
 
     protected static InputData Grid(Coords upperCoords, RobotData journey) =>
         Grid(upperCoords, new List<RobotData> { journey });
@@ -19,6 +20,15 @@ public class BaseTest
     {
         GridUpperCoords = upperCoords,
         Journeys = journeys.ToList()
+    };
+
+    protected static RobotData BotFacing(Orientation orientation) => new()
+    {
+        StartPosition = new RobotPosition
+        {
+            Orientation = orientation,
+            Coords = ZeroZero
+        }
     };
 
     protected static RobotData SampleBot1 => new()

@@ -8,7 +8,7 @@ public class InputDataModel
     /**
      * For reading data from program args
      */
-    private static InputData? GetInputDataFromArgs(List<string> args)
+    public static InputData? GetInputDataFromArgs(List<string> args)
     {
         try
         {

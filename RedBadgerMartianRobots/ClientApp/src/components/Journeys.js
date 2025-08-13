@@ -45,7 +45,7 @@ const Journeys = ({ journeys, onAddJourneyClick, onDeleteJourneyClick, onAxisCha
                                 <Input
                                     className="w-100"
                                     type="text"
-                                    disabled
+                                    readonly
                                     name="instructions"
                                     id="instructions"
                                     placeholder="Input Instructions"
